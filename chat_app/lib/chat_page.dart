@@ -3,8 +3,13 @@ import 'package:flutter/material.dart';
 
 // ignore_for_file: prefer_const_constructors
 class ChatPage extends StatelessWidget {
-  const ChatPage({Key? key}) : super(key: key);
+   ChatPage({Key? key}) : super(key: key);
+final chatmessagecontroller=TextEditingController();
 
+
+void onsendpressed(){
+  print("Chat Message: ${chatmessagecontroller.text}");
+}
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,8 +33,9 @@ class ChatPage extends StatelessWidget {
       body: Column(
         children: [
           Expanded(
+
             child: ListView.builder(
-                itemCount: 10,
+                itemCount: 3,
                 itemBuilder: (context, index) {
                   return ChatBubble(
                       alignment: index % 2 == 0
@@ -47,8 +53,22 @@ class ChatPage extends StatelessWidget {
                   icon: Icon(Icons.add),
                   color: Colors.white,
                 ),
+                Expanded(
+                    child: TextField(
+                      keyboardType: TextInputType.multiline,
+                  maxLines: 5,
+                  minLines: 1,
+                  controller: chatmessagecontroller,
+                      textCapitalization: TextCapitalization.sentences,
+                      style: TextStyle(color: Colors.white),
+                  decoration: InputDecoration(
+                    hintText: "Type your message",
+                    hintStyle: TextStyle(color: Colors.blueGrey),
+                    border: InputBorder.none
+                  ),
+                )),
                 IconButton(
-                  onPressed: () {},
+                  onPressed: () {onsendpressed();},
                   icon: Icon(Icons.send),
                   color: Colors.white,
                 )

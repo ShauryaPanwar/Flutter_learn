@@ -1,4 +1,5 @@
 import 'package:chat_app/chat_page.dart';
+import 'package:chat_app/counter_stateful_demo.dart';
 // import 'package:chat_app/login_page.dart';
 import 'package:flutter/material.dart';
 
@@ -12,8 +13,8 @@ class ChatApp extends StatelessWidget {
     // TODO: implement build
     return MaterialApp(
       title: "Boobies",
-      theme: ThemeData(primarySwatch: Colors.purple),
-      home: const ChatPage(),
+      theme: ThemeData(primarySwatch: Colors.yellow),
+      home: CounterStateful(buttonColor: Colors.blue),
     );
   }
 }

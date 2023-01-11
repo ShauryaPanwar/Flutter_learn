@@ -1,3 +1,4 @@
+import 'package:chat_app/Widgets/ChatBubble.dart';
 import 'package:flutter/material.dart';
 
 // ignore_for_file: prefer_const_constructors
@@ -27,99 +28,30 @@ class ChatPage extends StatelessWidget {
       body: Column(
         children: [
           Expanded(
-
-            child: ListView(
-              children: [
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: Container(
-                    padding: EdgeInsets.all(24),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Text(
-                          "Hola Amigos!!!!",
-                          style: TextStyle(fontSize: 20, color: Colors.white),
-                        ),
-                        Image.network(
-                          'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80',
-                          width: 150,
-                        )
-                      ],
-                    ),
-                    margin: EdgeInsets.all(50),
-                    decoration: BoxDecoration(
-                        color: Colors.grey,
-                        borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(12),
-                            topRight: Radius.circular(12),
-                            bottomLeft: Radius.circular(12))),
-                  ),
-                ),
-                Align(
-                  alignment: Alignment.centerRight,
-                  child: Container(
-                    padding: EdgeInsets.all(24),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Text(
-                          "Hola Amigos!!!!",
-                          style: TextStyle(fontSize: 20, color: Colors.white),
-                        ),
-                        Image.network(
-                          'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80',
-                          width: 150,
-                        )
-                      ],
-                    ),
-                    margin: EdgeInsets.all(50),
-                    decoration: BoxDecoration(
-                        color: Colors.grey,
-                        borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(12),
-                            topRight: Radius.circular(12),
-                            bottomLeft: Radius.circular(12))),
-                  ),
-                ),
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: Container(
-
-                    padding: EdgeInsets.all(24),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Text(
-                          "Hola Amigos!!!!",
-                          style: TextStyle(fontSize: 20, color: Colors.white),
-                        ),
-                        Image.network(
-                          'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80',
-                          width: 150,
-                        )
-                      ],
-                    ),
-                    margin: EdgeInsets.all(50),
-                    decoration: BoxDecoration(
-                        color: Colors.grey,
-                        borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(12),
-                            topRight: Radius.circular(12),
-                            bottomLeft: Radius.circular(12))),
-                  ),
-                ),
-
-              ],
-            ),
+            child: ListView.builder(
+                itemCount: 10,
+                itemBuilder: (context, index) {
+                  return ChatBubble(
+                      alignment: index % 2 == 0
+                          ? Alignment.centerLeft
+                          : Alignment.centerRight,
+                      message: "Hello Amigos !!!!");
+                }),
           ),
           Container(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                IconButton(onPressed: (){}, icon:Icon(Icons.add), color: Colors.white,),
-                IconButton(onPressed: (){}, icon:Icon(Icons.send), color: Colors.white,)
-
+                IconButton(
+                  onPressed: () {},
+                  icon: Icon(Icons.add),
+                  color: Colors.white,
+                ),
+                IconButton(
+                  onPressed: () {},
+                  icon: Icon(Icons.send),
+                  color: Colors.white,
+                )
               ],
             ),
             height: 80,

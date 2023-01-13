@@ -1,24 +1,28 @@
+import 'package:chat_app/chat_page.dart';
 import 'package:flutter/material.dart';
 // ignore_for_file: prefer_const_constructors
 
 class LoginPage extends StatelessWidget {
-   LoginPage({Key? key}) : super(key: key);
+  LoginPage({Key? key}) : super(key: key);
 
-final _formkey = GlobalKey<FormState>();
+  final _formkey = GlobalKey<FormState>();
 
-  void loginuser() {
+  void loginuser(context) {
     if (_formkey.currentState != null && _formkey.currentState!.validate()) {
       print("LoggedIn!!!!");
       print(usernamecontroller.text);
       print(passwordcontroller.text);
-    }
-    else  print("Not Suncessfully loggedin");
+
+      Navigator.pushReplacementNamed(
+          context,'/chat',arguments: '${usernamecontroller.text}');
+    } else
+      print("Not Suncessfully loggedin");
   }
 
-final usernamecontroller =TextEditingController();
-  final passwordcontroller =TextEditingController();
+  final usernamecontroller = TextEditingController();
+  final passwordcontroller = TextEditingController();
 
-   @override
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
@@ -57,32 +61,29 @@ final usernamecontroller =TextEditingController();
                 width: 400,
                 height: 200,
               ),
-
               SizedBox(
                 height: 18,
               ),
-
               Form(
                 key: _formkey,
                 child: Column(
                   children: [
                     TextFormField(
-                      validator: (value){
-                        if(value!=null && value.isNotEmpty && value.length <5){
+                      validator: (value) {
+                        if (value != null &&
+                            value.isNotEmpty &&
+                            value.length < 5) {
                           return "Invalid Username Input";
-                        }
-                        else if(value!=null && value.isEmpty){
+                        } else if (value != null && value.isEmpty) {
                           return "Please type your Username";
                         }
                         return null;
                       },
                       controller: usernamecontroller,
-
                       decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        hintText:"Type your Username.",
-                        hintStyle: TextStyle(color: Colors.amber)
-                      ),
+                          border: OutlineInputBorder(),
+                          hintText: "Type your Username.",
+                          hintStyle: TextStyle(color: Colors.amber)),
                     ),
                     SizedBox(
                       height: 22,
@@ -92,9 +93,8 @@ final usernamecontroller =TextEditingController();
                       obscureText: true,
                       decoration: InputDecoration(
                           border: OutlineInputBorder(),
-                          hintText:"Type your Password.",
-                          hintStyle: TextStyle(color: Colors.amber)
-                      ),
+                          hintText: "Type your Password.",
+                          hintStyle: TextStyle(color: Colors.amber)),
                     ),
                   ],
                 ),
@@ -103,7 +103,9 @@ final usernamecontroller =TextEditingController();
                 height: 18,
               ),
               ElevatedButton(
-                  onPressed: loginuser,
+                  onPressed: () {
+                    loginuser(context);
+                  },
                   child: Text(
                     "Login",
                     style: TextStyle(fontSize: 30, fontWeight: FontWeight.w300),
@@ -111,16 +113,15 @@ final usernamecontroller =TextEditingController();
               SizedBox(
                 height: 10,
               ),
-
               InkWell(
                 splashColor: Colors.lime,
-                onDoubleTap: (){
+                onDoubleTap: () {
                   print("Double tapped");
                 },
-                onLongPress: (){
+                onLongPress: () {
                   print("Long Pressed");
                 },
-                onTap: (){
+                onTap: () {
                   //Navigate to browser
                   print("Browser link clicked!!");
                 },

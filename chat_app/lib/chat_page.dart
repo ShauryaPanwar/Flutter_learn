@@ -1,9 +1,10 @@
 import 'package:chat_app/Widgets/ChatBubble.dart';
+import 'package:chat_app/login_page.dart';
 import 'package:flutter/material.dart';
 
 // ignore_for_file: prefer_const_constructors
 class ChatPage extends StatelessWidget {
-   ChatPage({Key? key}) : super(key: key);
+   ChatPage({Key? key, }) : super(key: key);
 final chatmessagecontroller=TextEditingController();
 
 
@@ -12,20 +13,19 @@ void onsendpressed(){
 }
   @override
   Widget build(BuildContext context) {
+  final username=ModalRoute.of(context)!.settings.arguments as String;
     return Scaffold(
       appBar: AppBar(
         titleTextStyle: TextStyle(color: Colors.black, fontSize: 20),
-        backgroundColor: Colors.transparent,
         elevation: 0,
-        title: Center(child: Text("Hi Shaurya!!!!")),
+        title: Center(child: Text("Hi $username!!!!")),
         actions: [
           IconButton(
               onPressed: () {
-                print("Icon Pressed");
+                Navigator.pushReplacementNamed(context,'/');
               },
               icon: Icon(
                 Icons.logout,
-                color: Colors.black,
                 size: 25,
               ))
         ],

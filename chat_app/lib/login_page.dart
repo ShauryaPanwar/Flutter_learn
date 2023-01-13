@@ -1,4 +1,6 @@
 import 'package:chat_app/chat_page.dart';
+import 'package:chat_app/utils/brand_color.dart';
+import 'package:chat_app/utils/spaces.dart';
 import 'package:chat_app/utils/textfieldstyle.dart';
 import 'package:flutter/material.dart';
 
@@ -43,9 +45,7 @@ class LoginPage extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                     letterSpacing: 0.5,
                   )),
-              SizedBox(
-                height: 15,
-              ),
+              verticalspacing(15),
               Text(
                 "Welcome back \n You've been missed!!",
                 textAlign: TextAlign.center,
@@ -56,17 +56,13 @@ class LoginPage extends StatelessWidget {
                   letterSpacing: 0.5,
                 ),
               ),
-              SizedBox(
-                height: 15,
-              ),
-              Image.network(
-                'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80',
+              verticalspacing(15),
+              Image.asset(
+                'assets/Loginpic.jpg',
                 width: 400,
                 height: 200,
               ),
-              SizedBox(
-                height: 18,
-              ),
+              verticalspacing(18),
               Form(
                 key: _formkey,
                 child: Column(
@@ -87,9 +83,7 @@ class LoginPage extends StatelessWidget {
 
                     ),
 
-                    SizedBox(
-                      height: 22,
-                    ),
+                    verticalspacing(18),
 
                     Logintextfield(
                       hasaster: true,
@@ -99,20 +93,18 @@ class LoginPage extends StatelessWidget {
                   ],
                 ),
               ),
-              SizedBox(
-                height: 18,
-              ),
+              verticalspacing(18),
               ElevatedButton(
                   onPressed: () {
                     loginuser(context);
                   },
+
                   child: Text(
                     "Login",
                     style: TextStyle(fontSize: 25, fontWeight: FontWeight.w300),
-                  )),
-              SizedBox(
-                height: 10,
+                  )
               ),
+              verticalspacing(10),
               InkWell(
                 splashColor: Colors.lime,
                 onDoubleTap: () {

@@ -14,7 +14,7 @@ class ChatApp extends StatelessWidget {
     return MaterialApp(
       title: "Boobies",
       theme: ThemeData(
-          primarySwatch: Colors.blueGrey,
+          primarySwatch: Colors.blue,
           appBarTheme: AppBarTheme(
               backgroundColor: Colors.blue, foregroundColor: Colors.black)),
       home: LoginPage(),

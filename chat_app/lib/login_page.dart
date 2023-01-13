@@ -1,5 +1,8 @@
 import 'package:chat_app/chat_page.dart';
+import 'package:chat_app/utils/textfieldstyle.dart';
 import 'package:flutter/material.dart';
+
+import 'Widgets/logintextfield.dart';
 // ignore_for_file: prefer_const_constructors
 
 class LoginPage extends StatelessWidget {
@@ -68,7 +71,7 @@ class LoginPage extends StatelessWidget {
                 key: _formkey,
                 child: Column(
                   children: [
-                    TextFormField(
+                    Logintextfield(
                       validator: (value) {
                         if (value != null &&
                             value.isNotEmpty &&
@@ -79,23 +82,20 @@ class LoginPage extends StatelessWidget {
                         }
                         return null;
                       },
+                      hintText: "Type Your Username..",
                       controller: usernamecontroller,
-                      decoration: InputDecoration(
-                          border: OutlineInputBorder(),
-                          hintText: "Type your Username.",
-                          hintStyle: TextStyle(color: Colors.amber)),
+
                     ),
+
                     SizedBox(
                       height: 22,
                     ),
-                    TextFormField(
+
+                    Logintextfield(
+                      hasaster: true,
                       controller: passwordcontroller,
-                      obscureText: true,
-                      decoration: InputDecoration(
-                          border: OutlineInputBorder(),
-                          hintText: "Type your Password.",
-                          hintStyle: TextStyle(color: Colors.amber)),
-                    ),
+                      hintText: "Type your password..",
+                    )
                   ],
                 ),
               ),
@@ -108,7 +108,7 @@ class LoginPage extends StatelessWidget {
                   },
                   child: Text(
                     "Login",
-                    style: TextStyle(fontSize: 30, fontWeight: FontWeight.w300),
+                    style: TextStyle(fontSize: 25, fontWeight: FontWeight.w300),
                   )),
               SizedBox(
                 height: 10,

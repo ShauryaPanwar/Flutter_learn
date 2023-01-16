@@ -3,6 +3,9 @@ import 'package:chat_app/utils/brand_color.dart';
 import 'package:chat_app/utils/spaces.dart';
 import 'package:chat_app/utils/textfieldstyle.dart';
 import 'package:flutter/material.dart';
+import 'package:social_media_buttons/social_media_button.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 import 'Widgets/logintextfield.dart';
 // ignore_for_file: prefer_const_constructors
@@ -18,8 +21,8 @@ class LoginPage extends StatelessWidget {
       print(usernamecontroller.text);
       print(passwordcontroller.text);
 
-      Navigator.pushReplacementNamed(
-          context,'/chat',arguments: '${usernamecontroller.text}');
+      Navigator.pushReplacementNamed(context, '/chat',
+          arguments: '${usernamecontroller.text}');
     } else
       print("Not Suncessfully loggedin");
   }
@@ -80,11 +83,8 @@ class LoginPage extends StatelessWidget {
                       },
                       hintText: "Type Your Username..",
                       controller: usernamecontroller,
-
                     ),
-
                     verticalspacing(18),
-
                     Logintextfield(
                       hasaster: true,
                       controller: passwordcontroller,
@@ -98,12 +98,10 @@ class LoginPage extends StatelessWidget {
                   onPressed: () {
                     loginuser(context);
                   },
-
                   child: Text(
                     "Login",
                     style: TextStyle(fontSize: 25, fontWeight: FontWeight.w300),
-                  )
-              ),
+                  )),
               verticalspacing(10),
               InkWell(
                 splashColor: Colors.lime,
@@ -113,9 +111,11 @@ class LoginPage extends StatelessWidget {
                 onLongPress: () {
                   print("Long Pressed");
                 },
-                onTap: () {
+                onTap: () async {
                   //Navigate to browser
-                  print("Browser link clicked!!");
+                  if (!await launchUrlString('https://www.youtube.com/')) {
+                    throw 'Could not launch url!!!';
+                  }
                 },
                 child: Column(
                   children: [
@@ -123,6 +123,16 @@ class LoginPage extends StatelessWidget {
                     Text("Website.."),
                   ],
                 ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children :  [
+                  SocialMediaButton.github (
+                    url: 'https://www.youtube.com/watch?v=m5bW7n-24zo',
+                  ),
+                  SocialMediaButton.linkedin(
+                      url: 'www.linkedin.com/in/shaurya-panwar-social'),
+                ],
               )
             ],
           ),

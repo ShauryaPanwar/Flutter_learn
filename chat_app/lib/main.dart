@@ -1,3 +1,4 @@
+import 'package:chat_app/Widgets/ChatBubble.dart';
 import 'package:chat_app/chat_page.dart';
 import 'package:chat_app/counter_stateful_demo.dart';
 import 'package:chat_app/login_page.dart';

@@ -1,5 +1,6 @@
 import 'package:chat_app/Widgets/ChatBubble.dart';
 import 'package:chat_app/login_page.dart';
+import 'package:chat_app/models/chat_message_entity.dart';
 import 'package:flutter/material.dart';
 
 // ignore_for_file: prefer_const_constructors
@@ -41,7 +42,13 @@ void onsendpressed(){
                       alignment: index % 2 == 0
                           ? Alignment.centerLeft
                           : Alignment.centerRight,
-                      message: "Hello Amigos !!!!");
+                      entity: Chatmessageentity(
+                        id: '1234',
+                        text: 'Heelo amigos',
+                        createat: DateTime.now().millisecondsSinceEpoch,
+                        author: Author(Username:'Shaurya')
+
+                      ));
                 }),
           ),
           Container(

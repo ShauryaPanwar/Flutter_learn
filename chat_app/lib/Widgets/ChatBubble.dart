@@ -4,13 +4,19 @@ import 'package:flutter/material.dart';
 class ChatBubble extends StatelessWidget {
   final Chatmessageentity entity;
   final Alignment alignment;
-  const ChatBubble({Key? key, required this.alignment, required this.entity}) : super(key: key);
+
+  const ChatBubble({Key? key, required this.alignment, required this.entity})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Align(
       alignment: alignment,
       child: Container(
+        constraints: BoxConstraints(
+          maxWidth: MediaQuery.of(context).size.width * 0.5,
+
+        ),
         padding: EdgeInsets.all(24),
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -19,11 +25,11 @@ class ChatBubble extends StatelessWidget {
               "${entity.text}",
               style: TextStyle(fontSize: 20, color: Colors.white),
             ),
-            if (entity.imageurl!=null)
+            if (entity.imageurl != null)
               Image.network(
-              '${entity.imageurl}',
-              width: 150,
-            )
+                '${entity.imageurl}',
+                width: 150,
+              )
           ],
         ),
         margin: EdgeInsets.all(50),
@@ -34,6 +40,7 @@ class ChatBubble extends StatelessWidget {
                 topRight: Radius.circular(12),
                 bottomLeft: Radius.circular(12))),
       ),
-    );;
+    );
+    ;
   }
 }

@@ -21,21 +21,32 @@ class _ChatPageState extends State<ChatPage> {
 
   void onsendpressed() {
     print("Chat Message: ${chatmessagecontroller.text}");
+    final newchatmessage = Chatmessageentity(text: chatmessagecontroller.text,
+        id: '244',
+        createat: DateTime.now().millisecondsSinceEpoch,
+        author: Author(Username: bb ));
+    onMessagesent(newchatmessage);
   }
 
   List<Chatmessageentity> _message = [];
 
 
-
-  _loadinitialmessage() async{
+  _loadinitialmessage() async {
     final response = await rootBundle.loadString('assets/mockdata.json');
-    final List<dynamic> decodedlist =jsonDecode(response) as List;
-    final List<Chatmessageentity> _chatmessages =decodedlist.map((listitem){
+    final List<dynamic> decodedlist = jsonDecode(response) as List;
+    final List<Chatmessageentity> _chatmessages = decodedlist.map((listitem) {
       return Chatmessageentity.fromJson(listitem);
     }).toList();
 
     setState(() {
-      _message=_chatmessages;
+      _message = _chatmessages;
+    });
+  }
+
+  onMessagesent(Chatmessageentity ent){
+    _message.add(ent);
+    setState(() {
+
     });
   }
 
@@ -45,9 +56,15 @@ class _ChatPageState extends State<ChatPage> {
     super.initState();
   }
 
+  String bb="";
+
   @override
   Widget build(BuildContext context) {
-    final username = ModalRoute.of(context)!.settings.arguments as String;
+    final username = ModalRoute
+        .of(context)!
+        .settings
+        .arguments as String;
+    bb=username;
     return Scaffold(
       appBar: AppBar(
         titleTextStyle: TextStyle(color: Colors.black, fontSize: 20),
@@ -88,17 +105,17 @@ class _ChatPageState extends State<ChatPage> {
                 ),
                 Expanded(
                     child: TextField(
-                  keyboardType: TextInputType.multiline,
-                  maxLines: 5,
-                  minLines: 1,
-                  controller: chatmessagecontroller,
-                  textCapitalization: TextCapitalization.sentences,
-                  style: TextStyle(color: Colors.white),
-                  decoration: InputDecoration(
-                      hintText: "Type your message",
-                      hintStyle: TextStyle(color: Colors.blueGrey),
-                      border: InputBorder.none),
-                )),
+                      keyboardType: TextInputType.multiline,
+                      maxLines: 5,
+                      minLines: 1,
+                      controller: chatmessagecontroller,
+                      textCapitalization: TextCapitalization.sentences,
+                      style: TextStyle(color: Colors.white),
+                      decoration: InputDecoration(
+                          hintText: "Type your message",
+                          hintStyle: TextStyle(color: Colors.blueGrey),
+                          border: InputBorder.none),
+                    )),
                 IconButton(
                   onPressed: () {
                     onsendpressed();

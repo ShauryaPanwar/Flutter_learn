@@ -1,5 +1,6 @@
 import 'dart:convert';
-
+import 'package:chat_app/models/image_from.dart';
+import 'package:http/http.dart' as http;
 import 'package:chat_app/Widgets/ChatBubble.dart';
 import 'package:chat_app/login_page.dart';
 import 'package:chat_app/models/chat_message_entity.dart';
@@ -21,19 +22,18 @@ class _ChatPageState extends State<ChatPage> {
 
   void onsendpressed() {
     print("Chat Message: ${chatmessagecontroller.text}");
-    final newchatmessage = Chatmessageentity(text: chatmessagecontroller.text,
+    final newchatmessage = Chatmessageentity(
+        text: chatmessagecontroller.text,
         id: '244',
         createat: DateTime.now().millisecondsSinceEpoch,
-        author: Author(Username: bb ));
+        author: Author(Username: bb));
     onMessagesent(newchatmessage);
   }
 
   List<Chatmessageentity> _message = [];
 
-
   _loadinitialmessage() async {
-    rootBundle.loadString('assets/mockdata.json').then((response){
-
+    rootBundle.loadString('assets/mockdata.json').then((response) {
       final List<dynamic> decodedlist = jsonDecode(response) as List;
       final List<Chatmessageentity> _chatmessages = decodedlist.map((listitem) {
         return Chatmessageentity.fromJson(listitem);
@@ -43,33 +43,46 @@ class _ChatPageState extends State<ChatPage> {
         _message = _chatmessages;
       });
     });
-    
-    print("Mojua");
 
+    print("Mojua");
   }
 
-  onMessagesent(Chatmessageentity ent){
-    _message.add(ent);
-    setState(() {
+  Future<List<Pixelfrom>> _getnetimg() async {
+    var endpint = Uri.parse('http://pixelford.com/api2/imges');
+    final response = await http.get(endpint);
 
-    });
+    if (response.statusCode == 200) {
+      final List<dynamic> decodedlist = jsonDecode(response.body) as List;
+      final List<Pixelfrom> _imagelist = decodedlist.map((listitem) {
+        return Pixelfrom.fromJson(listitem);
+      }).toList();
+
+      print(_imagelist[0].urlFullSize);
+      return _imagelist;
+    } else {
+      throw Exception('API not successful');
+    }
+  }
+
+  onMessagesent(Chatmessageentity ent) {
+    _message.add(ent);
+    setState(() {});
   }
 
   @override
   void initState() {
     _loadinitialmessage();
+    _getnetimg();
     super.initState();
   }
 
-  String bb="";
+  String bb = "";
 
   @override
   Widget build(BuildContext context) {
-    final username = ModalRoute
-        .of(context)!
-        .settings
-        .arguments as String;
-    bb=username;
+    _getnetimg();
+    final username = ModalRoute.of(context)!.settings.arguments as String;
+    bb = username;
     return Scaffold(
       appBar: AppBar(
         titleTextStyle: TextStyle(color: Colors.black, fontSize: 20),
@@ -88,6 +101,14 @@ class _ChatPageState extends State<ChatPage> {
       ),
       body: Column(
         children: [
+          FutureBuilder<List<Pixelfrom>>(
+              future: _getnetimg(),
+              builder: (BuildContext context,
+                  AsyncSnapshot<List<Pixelfrom>> snapshot) {
+                if (snapshot.hasData)
+                  return Image.network(snapshot.data![0].urlSmallSize);
+                return CircularProgressIndicator();
+              }),
           Expanded(
             child: ListView.builder(
                 itemCount: _message.length,
@@ -110,17 +131,17 @@ class _ChatPageState extends State<ChatPage> {
                 ),
                 Expanded(
                     child: TextField(
-                      keyboardType: TextInputType.multiline,
-                      maxLines: 5,
-                      minLines: 1,
-                      controller: chatmessagecontroller,
-                      textCapitalization: TextCapitalization.sentences,
-                      style: TextStyle(color: Colors.white),
-                      decoration: InputDecoration(
-                          hintText: "Type your message",
-                          hintStyle: TextStyle(color: Colors.blueGrey),
-                          border: InputBorder.none),
-                    )),
+                  keyboardType: TextInputType.multiline,
+                  maxLines: 5,
+                  minLines: 1,
+                  controller: chatmessagecontroller,
+                  textCapitalization: TextCapitalization.sentences,
+                  style: TextStyle(color: Colors.white),
+                  decoration: InputDecoration(
+                      hintText: "Type your message",
+                      hintStyle: TextStyle(color: Colors.blueGrey),
+                      border: InputBorder.none),
+                )),
                 IconButton(
                   onPressed: () {
                     onsendpressed();

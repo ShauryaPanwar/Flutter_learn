@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:chat_app/Widgets/picker_body.dart';
 import 'package:chat_app/models/image_from.dart';
 import 'package:chat_app/repo/image_repository.dart';
 import 'package:http/http.dart' as http;
@@ -50,8 +51,6 @@ class _ChatPageState extends State<ChatPage> {
     print("Mojua");
   }
 
-
-
   onMessagesent(Chatmessageentity ent) {
     _message.add(ent);
     setState(() {});
@@ -87,14 +86,7 @@ class _ChatPageState extends State<ChatPage> {
       ),
       body: Column(
         children: [
-          FutureBuilder<List<Pixelfrom>>(
-              future: _rep.getnetimg(),
-              builder: (BuildContext context,
-                  AsyncSnapshot<List<Pixelfrom>> snapshot) {
-                if (snapshot.hasData)
-                  return Image.network(snapshot.data![0].urlSmallSize);
-                return CircularProgressIndicator();
-              }),
+
           Expanded(
             child: ListView.builder(
                 itemCount: _message.length,
@@ -111,7 +103,13 @@ class _ChatPageState extends State<ChatPage> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    showModalBottomSheet(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return NetworkImagePicker(imgrep: _rep);
+                        });
+                  },
                   icon: Icon(Icons.add),
                   color: Colors.white,
                 ),

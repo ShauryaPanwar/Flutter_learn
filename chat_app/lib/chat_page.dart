@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:chat_app/models/image_from.dart';
+import 'package:chat_app/repo/image_repository.dart';
 import 'package:http/http.dart' as http;
 import 'package:chat_app/Widgets/ChatBubble.dart';
 import 'package:chat_app/login_page.dart';
@@ -16,6 +17,8 @@ class ChatPage extends StatefulWidget {
   @override
   State<ChatPage> createState() => _ChatPageState();
 }
+
+final Imagerepo _rep = Imagerepo();
 
 class _ChatPageState extends State<ChatPage> {
   final chatmessagecontroller = TextEditingController();
@@ -47,22 +50,7 @@ class _ChatPageState extends State<ChatPage> {
     print("Mojua");
   }
 
-  Future<List<Pixelfrom>> _getnetimg() async {
-    var endpint = Uri.parse('http://pixelford.com/api2/imges');
-    final response = await http.get(endpint);
 
-    if (response.statusCode == 200) {
-      final List<dynamic> decodedlist = jsonDecode(response.body) as List;
-      final List<Pixelfrom> _imagelist = decodedlist.map((listitem) {
-        return Pixelfrom.fromJson(listitem);
-      }).toList();
-
-      print(_imagelist[0].urlFullSize);
-      return _imagelist;
-    } else {
-      throw Exception('API not successful');
-    }
-  }
 
   onMessagesent(Chatmessageentity ent) {
     _message.add(ent);
@@ -72,7 +60,6 @@ class _ChatPageState extends State<ChatPage> {
   @override
   void initState() {
     _loadinitialmessage();
-    _getnetimg();
     super.initState();
   }
 
@@ -80,7 +67,6 @@ class _ChatPageState extends State<ChatPage> {
 
   @override
   Widget build(BuildContext context) {
-    _getnetimg();
     final username = ModalRoute.of(context)!.settings.arguments as String;
     bb = username;
     return Scaffold(
@@ -102,7 +88,7 @@ class _ChatPageState extends State<ChatPage> {
       body: Column(
         children: [
           FutureBuilder<List<Pixelfrom>>(
-              future: _getnetimg(),
+              future: _rep.getnetimg(),
               builder: (BuildContext context,
                   AsyncSnapshot<List<Pixelfrom>> snapshot) {
                 if (snapshot.hasData)

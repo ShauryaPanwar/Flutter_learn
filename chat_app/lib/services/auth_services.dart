@@ -23,6 +23,13 @@ class Auth extends ChangeNotifier{
     }
   }
 
+
+  Future<bool> isloggedin() async {
+    String? username12 = await _pref.getString('Username');
+    if(username12 == null)return false;
+    return true;
+  }
+
   void logoutuser()  {
     _pref.clear();
 

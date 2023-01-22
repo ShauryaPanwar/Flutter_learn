@@ -94,6 +94,7 @@ class _ChatPageState extends State<ChatPage> {
     final username = ModalRoute.of(context)!.settings.arguments as String;
     bb = username;
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         titleTextStyle: TextStyle(color: Colors.black, fontSize: 20),
         elevation: 0,

@@ -15,6 +15,8 @@ class ChatPage extends StatefulWidget {
     Key? key,
   }) : super(key: key);
 
+
+
   @override
   State<ChatPage> createState() => _ChatPageState();
 }
@@ -23,6 +25,7 @@ final Imagerepo _rep = Imagerepo();
 
 class _ChatPageState extends State<ChatPage> {
   final chatmessagecontroller = TextEditingController();
+  String _selectedimageurl="";
 
   void onsendpressed() {
     print("Chat Message: ${chatmessagecontroller.text}");
@@ -32,6 +35,16 @@ class _ChatPageState extends State<ChatPage> {
         createat: DateTime.now().millisecondsSinceEpoch,
         author: Author(Username: bb));
     onMessagesent(newchatmessage);
+
+    if(_selectedimageurl.isNotEmpty){
+      newchatmessage.imageurl=_selectedimageurl;
+    }
+
+    chatmessagecontroller.clear();
+    _selectedimageurl='';
+    setState(() {
+
+    });
   }
 
   List<Chatmessageentity> _message = [];
@@ -63,6 +76,18 @@ class _ChatPageState extends State<ChatPage> {
   }
 
   String bb = "";
+
+
+  void onimgpicked(String newimurl){
+
+    setState(() {
+      _selectedimageurl=newimurl;
+    });
+    
+    Navigator.of(context).pop();
+
+
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -107,14 +132,17 @@ class _ChatPageState extends State<ChatPage> {
                     showModalBottomSheet(
                         context: context,
                         builder: (BuildContext context) {
-                          return NetworkImagePicker(imgrep: _rep);
+                          return NetworkImagePicker(imgrep: _rep,onimgselected: onimgpicked ,);
                         });
                   },
                   icon: Icon(Icons.add),
                   color: Colors.white,
                 ),
                 Expanded(
-                    child: TextField(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        TextField(
                   keyboardType: TextInputType.multiline,
                   maxLines: 5,
                   minLines: 1,
@@ -122,10 +150,15 @@ class _ChatPageState extends State<ChatPage> {
                   textCapitalization: TextCapitalization.sentences,
                   style: TextStyle(color: Colors.white),
                   decoration: InputDecoration(
-                      hintText: "Type your message",
-                      hintStyle: TextStyle(color: Colors.blueGrey),
-                      border: InputBorder.none),
-                )),
+                          hintText: "Type your message",
+                          hintStyle: TextStyle(color: Colors.blueGrey),
+                          border: InputBorder.none),
+                ),
+                        if(_selectedimageurl.isNotEmpty)
+                           Center(child: Image.network(_selectedimageurl, width: 150,height: 80,)),
+                      ],
+                    )
+                ),
                 IconButton(
                   onPressed: () {
                     onsendpressed();
@@ -135,7 +168,7 @@ class _ChatPageState extends State<ChatPage> {
                 )
               ],
             ),
-            height: 80,
+
             decoration: BoxDecoration(
                 color: Colors.black,
                 borderRadius: BorderRadius.vertical(top: Radius.circular(20))),

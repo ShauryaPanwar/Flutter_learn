@@ -17,7 +17,7 @@ class NetworkImagePicker extends StatelessWidget {
         future: imgrep.getnetimg(),
         builder:
             (BuildContext context, AsyncSnapshot<List<Pixelfrom>> snapshot) {
-          if (snapshot.hasData)
+          if (snapshot.hasData){
             return GridView.builder(
                 itemCount: snapshot.data!.length,
                 itemBuilder: (context, index) {
@@ -31,7 +31,14 @@ class NetworkImagePicker extends StatelessWidget {
                     crossAxisSpacing: 2,
                     mainAxisSpacing: 2,
                     maxCrossAxisExtent:
-                        MediaQuery.of(context).size.width * 0.5));
+                        MediaQuery.of(context).size.width * 0.5)
+            );
+          }else if(snapshot.hasError){
+            return Padding(
+              padding: const EdgeInsets.all(26.0),
+              child: Text('This is the error: ${snapshot.error}'),
+            );
+          }
 
           //
           return Padding(

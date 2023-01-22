@@ -37,6 +37,8 @@ dependencies:
   google_fonts: ^3.0.1
   url_launcher: ^6.1.7
   json_annotation: ^4.8.0
+  shared_preferences: ^2.0.17
+  provider: ^6.0.5
   http: any
   social_media_buttons:
     git:
